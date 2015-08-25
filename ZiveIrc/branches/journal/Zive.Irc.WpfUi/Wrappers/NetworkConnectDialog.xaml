@@ -1,0 +1,77 @@
+﻿<Window x:Class="Zive.Irc.WpfUi.NetworkConnectDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Network Chooser"
+        Height="Auto" Width="Auto" SizeToContent="WidthAndHeight"
+        Loaded="Window_Loaded">
+
+    <Window.CommandBindings>
+        <CommandBinding Command="Close" CanExecute="Close_CanExecute" Executed="Close_Executed" />
+    </Window.CommandBindings>
+
+    <Window.Resources>
+        <ControlTemplate x:Key="Default" TargetType='{x:Type ListViewItem}'>
+            <StackPanel>
+                <GridViewRowPresenter Content="{TemplateBinding Content}" Columns="{TemplateBinding GridView.ColumnCollection}" MouseLeftButtonDown="GridViewRowPresenter_MouseLeftButtonDown" />
+            </StackPanel>
+        </ControlTemplate>
+    </Window.Resources>
+
+    <Grid Width="Auto" Height="Auto">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+
+        <ListView Name="NetworkListView"
+                  Grid.Row="0"
+                  Width="Auto" Height="Auto"
+                  HorizontalAlignment="Left" VerticalAlignment="Top"
+                  Padding="4"
+                  Margin="4"
+                  SelectionMode="Single"
+                  IsTabStop="False" TabIndex="3">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="{x:Type ListViewItem}">
+                    <Setter Property="Template" Value="{StaticResource Default}" />
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Name}">
+                        <GridViewColumnHeader>Name
+                            <GridViewColumnHeader.ContextMenu>
+                                <ContextMenu Name="NameColumnContextMenu">
+                                    <MenuItem Header="Sort _ascending" Click="NameColumn_SortAscendingClicked" />
+                                    <MenuItem Header="Sort _descending" Click="NameColumn_SortDescendingClicked" />
+                                </ContextMenu>
+                            </GridViewColumnHeader.ContextMenu>
+                        </GridViewColumnHeader>
+                    </GridViewColumn>
+
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Description}">
+                        <GridViewColumnHeader>Description
+                            <GridViewColumnHeader.ContextMenu>
+                                <ContextMenu Name="DescriptionColumnContextMenu">
+                                    <MenuItem Header="Sort _ascending"  Click="DescriptionColumn_SortAscendingClicked" />
+                                    <MenuItem Header="Sort _descending" Click="DescriptionColumn_SortDescendingClicked" />
+                                </ContextMenu>
+                            </GridViewColumnHeader.ContextMenu>
+                        </GridViewColumnHeader>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <StackPanel Grid.Row="1" HorizontalAlignment="Center" Orientation="Horizontal">
+            <Button HorizontalAlignment="Center" VerticalAlignment="Center" Padding="4" Margin="4" IsDefault="True" Command="ApplicationCommands.Close" TabIndex="1">OK</Button>
+            <Button HorizontalAlignment="Center" VerticalAlignment="Center" Padding="4" Margin="4" IsCancel="True" TabIndex="2">Cancel</Button>
+        </StackPanel>
+    </Grid>
+
+</Window>

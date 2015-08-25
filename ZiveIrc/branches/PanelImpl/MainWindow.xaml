@@ -1,0 +1,110 @@
+﻿<Window x:Class="Zive.Irc.WpfUi.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:w="clr-namespace:Zive.Irc.WpfUi"
+        Title="ZiveIRC" Height="350" Width="525"
+        Closing="Window_Closing"
+        Loaded="Window_Loaded"
+        >
+
+    <Window.CommandBindings>
+        <CommandBinding Command="Close" CanExecute="RoutedCommand_CanExecuteAlways" Executed="FileExit_Executed" />
+
+        <CommandBinding Command="{x:Static w:RoutedCommands.NetworkConnect}" CanExecute="RoutedCommand_CanExecuteAlways" Executed="NetworkConnect_Executed" />
+        <CommandBinding Command="{x:Static w:RoutedCommands.NetworkDisconnect}" CanExecute="NetworkDisconnect_CanExecute" Executed="NetworkDisconnect_Executed" />
+        <CommandBinding Command="{x:Static w:RoutedCommands.NetworkManage}" CanExecute="RoutedCommand_CanExecuteAlways" Executed="NetworkManage_Executed" />
+
+        <CommandBinding Command="{x:Static w:RoutedCommands.ServerConnect}" CanExecute="RoutedCommand_CanExecuteAlways" Executed="ServerConnect_Executed" />
+        <CommandBinding Command="{x:Static w:RoutedCommands.ServerDisconnect}" CanExecute="ServerDisconnect_CanExecute" Executed="ServerDisconnect_Executed" />
+        <CommandBinding Command="{x:Static w:RoutedCommands.ServerManage}" CanExecute="RoutedCommand_CanExecuteAlways" Executed="ServerManage_Executed" />
+
+        <CommandBinding Command="{x:Static w:RoutedCommands.ChannelJoin}" CanExecute="ChannelJoin_CanExecute" Executed="ChannelJoin_Executed" />
+        <CommandBinding Command="{x:Static w:RoutedCommands.ChannelPart}" CanExecute="ChannelPart_CanExecute" Executed="ChannelPart_Executed" />
+        <CommandBinding Command="{x:Static w:RoutedCommands.ChannelPartWithComment}" CanExecute="ChannelPartWithComment_CanExecute" Executed="ChannelPartWithComment_Executed" />
+        <CommandBinding Command="{x:Static w:RoutedCommands.ChannelManage}" CanExecute="RoutedCommand_CanExecuteAlways" Executed="ChannelManage_Executed" />
+
+        <CommandBinding Command="{x:Static w:RoutedCommands.HelpAbout}" CanExecute="RoutedCommand_CanExecuteAlways" Executed="HelpAbout_Executed" />
+    </Window.CommandBindings>
+
+    <Window.InputBindings>
+        <KeyBinding Command="{x:Static w:RoutedCommands.NetworkConnect}" Gesture="F2"></KeyBinding>
+        <KeyBinding Command="{x:Static w:RoutedCommands.ServerConnect}" Gesture="Shift+F2"></KeyBinding>
+        <KeyBinding Command="{x:Static w:RoutedCommands.ChannelJoin}" Gesture="Ctrl+F2"></KeyBinding>
+    </Window.InputBindings>
+
+    <Window.Resources>
+        <Style x:Key="NetworkNameStyle" TargetType="{x:Type Run}">
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Foreground" Value="Blue" />
+        </Style>
+
+        <Style x:Key="ServerNameStyle" TargetType="{x:Type Run}">
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Foreground" Value="Red" />
+        </Style>
+    </Window.Resources>
+
+    <Grid Name="Grid">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Menu Name="MainWindowMenu" Grid.Row="0" Height="23">
+            <MenuItem Name="FileMenu" Header="_File">
+                <MenuItem Name="FileMenuExit" Header="E_xit" Command="Close" />
+            </MenuItem>
+
+            <MenuItem Name="ViewMenu" Header="_View">
+
+            </MenuItem>
+
+            <MenuItem Name="NetworkMenu" Header="_Network">
+                <MenuItem Name="NetworkMenuConnect" Header="_Connect..." Command="{x:Static w:RoutedCommands.NetworkConnect}" />
+                <MenuItem Name="NetworkMenuDisconnect" Header="_Disconnect" Command="{x:Static w:RoutedCommands.NetworkDisconnect}" />
+                <Separator />
+                <MenuItem Name="NetworkMenuManage" Header="_Manage..." Command="{x:Static w:RoutedCommands.NetworkManage}" />
+            </MenuItem>
+
+            <MenuItem Name="ServerMenu" Header="_Server">
+                <MenuItem Name="ServerMenuConnect" Header="_Connect..." Command="{x:Static w:RoutedCommands.ServerConnect}" />
+                <MenuItem Name="ServerMenuDisconnect" Header="_Disconnect" Command="{x:Static w:RoutedCommands.ServerDisconnect}" />
+                <Separator />
+                <MenuItem Name="ServerMenuManage" Header="_Manage..." Command="{x:Static w:RoutedCommands.ServerManage}" />
+            </MenuItem>
+
+            <MenuItem Name="ChannelMenu" Header="_Channel">
+                <MenuItem Name="ChannelMenuJoin" Header="_Join..." Command="{x:Static w:RoutedCommands.ChannelJoin}" />
+                <MenuItem Name="ChannelMenuPart" Header="_Part" Command="{x:Static w:RoutedCommands.ChannelPart}" />
+                <MenuItem Name="ChannelMenuPartWithComment" Header="P_art with comment..." Command="{x:Static w:RoutedCommands.ChannelPartWithComment}" />
+                <Separator />
+                <MenuItem Name="ChannelMenuManage" Header="_Manage..." Command="{x:Static w:RoutedCommands.ChannelManage}" />
+            </MenuItem>
+
+            <MenuItem Name="ToolsMenu" Header="_Tools">
+
+            </MenuItem>
+
+            <MenuItem Name="CommandsMenu" Header="Co_mmands">
+
+            </MenuItem>
+
+            <MenuItem Name="WindowMenu" Header="_Window">
+
+            </MenuItem>
+
+            <MenuItem Name="HelpMenu" Header="_Help">
+                <MenuItem Name="HelpMenuAbout" Header="_About..." Command="{x:Static w:RoutedCommands.HelpAbout}" />
+            </MenuItem>
+        </Menu>
+
+        <TabControl Name="TabControl" Grid.Row="1">
+            <TabItem Name="ConsoleTab" Header="Console" GotFocus="RoutedCommand_GotFocus" Visibility="Collapsed">
+                <w:ConsolePanel x:Name="ConsolePanel" GotFocus="RoutedCommand_GotFocus" Visibility="Collapsed" />
+            </TabItem>
+        </TabControl>
+
+    </Grid>
+
+</Window>
